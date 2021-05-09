@@ -37,15 +37,15 @@ export default class DiffFinder {
     ) => {
         let segments = [];
 
-        while (originalRight >= 0 && modifiedRight >= 0) {
+        while (originalRight > 0 && modifiedRight > 0) {
             if (
-                originalContent.charAt(originalRight) ===
-                modifiedContent.charAt(modifiedRight)
+                originalContent.charAt(originalRight-1) ===
+                modifiedContent.charAt(modifiedRight-1)
             ) {
                 segments.push({
                     key:Math.random(),
                     type: "NO_CHANGE",
-                    content: originalContent.charAt(originalRight)
+                    content: originalContent.charAt(originalRight-1)
                 });
                 originalRight--;
                 modifiedRight--;
@@ -56,14 +56,14 @@ export default class DiffFinder {
                 segments.push({
                     key: Math.random(),
                     type: "ADD",
-                    content: modifiedContent.charAt(modifiedRight)
+                    content: modifiedContent.charAt(modifiedRight-1)
                 });
                 modifiedRight--;
             } else {
                 segments.push({
                     key: Math.random(),
                     type: "DELETE",
-                    content: originalContent.charAt(originalRight)
+                    content: originalContent.charAt(originalRight-1)
                 });
                 originalRight--;
             }
@@ -78,5 +78,4 @@ export default class DiffFinder {
     }
 
 }
-
 
