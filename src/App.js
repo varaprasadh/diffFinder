@@ -11,8 +11,10 @@ function App() {
   const [segments, setSegments] = useState([]);
 
   useEffect(()=>{
-    const originalContent = "abdee";
-    const modifiedContent = "afdee";
+    const originalContent = JSON.stringify(file1,null,1);
+    const modifiedContent = JSON.stringify(file2,null,1);
+    // const originalContent = "abdee";
+    // const modifiedContent = "afdee";
 
     const finder = new DiffFinder();
     const diffSegments = finder.getDiff(originalContent, modifiedContent);
