@@ -11,8 +11,8 @@ function App() {
   const [segments, setSegments] = useState([]);
 
   useEffect(()=>{
-    const originalContent = "varaprasadskjsgkj";
-    const modifiedContent = "varaprasadh";
+    const originalContent = "abdee";
+    const modifiedContent = "afdee";
 
     const finder = new DiffFinder();
     const diffSegments = finder.getDiff(originalContent, modifiedContent);

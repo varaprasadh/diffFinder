@@ -37,7 +37,15 @@ export default class DiffFinder {
     ) => {
         let segments = [];
 
-        while (originalRight > 0 && modifiedRight > 0) {
+        while (originalRight > 0 || modifiedRight > 0) {
+            while( originalRight <= 0 && modifiedRight > 0 ){
+                segments.push({
+                    key: Math.random(),
+                    type: "ADD",
+                    content: modifiedContent.charAt(modifiedRight - 1)
+                });
+                modifiedRight--;
+            }
             if (
                 originalContent.charAt(originalRight-1) ===
                 modifiedContent.charAt(modifiedRight-1)
@@ -72,10 +80,19 @@ export default class DiffFinder {
     };
 
     getDiff = (originalContent, modifiedContent) => {
-        const { diffMatrix } = this.buildDiffMatrix(originalContent, modifiedContent);
+        log("building diffMatrix");
+        const { diffMatrix, sequenceLength } = this.buildDiffMatrix(originalContent, modifiedContent);
+        log("diffMatrix", diffMatrix);
+        log("sequenceLength", sequenceLength);
         const segments = this.getDiffSegments(originalContent, modifiedContent, originalContent.length, modifiedContent.length, diffMatrix);
+        log("segments", segments);
         return segments
     }
 
 }
 
+const log = (TAG, message) => {
+    console.log({
+        [TAG]:message || '🙉' 
+    })
+};
