@@ -1,23 +1,36 @@
 import logo from './logo.svg';
 import './App.css';
 
+import DiffFinder from "./helpers/DiffFinder/index";
+import { useEffect, useState } from 'react';
+
 function App() {
+  const [segments, setSegments] = useState([]);
+
+  useEffect(()=>{
+    const originalContent = "abcdeee";
+    const modifiedContent = "abgdeee";
+
+    const finder = new DiffFinder();
+    const diffSegments = finder.getDiff(originalContent, modifiedContent);
+    setSegments(diffSegments);
+  },[])
+
+  const generateMarkup = (segments = []) => {
+    const JSX = segments.map(segment => {
+      return (
+        <span key={segment.key} className={segment.type}>
+          {segment.content}
+        </span>
+      )
+    })
+    return JSX;
+  }
+  
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {generateMarkup(segments)}
     </div>
   );
 }
